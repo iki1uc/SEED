@@ -1,9 +1,10 @@
-// Datei: ID_UNIT.js
+// ID_UNIT.js · GEN-Version
+const SEED = "⟁";
+const TRIAD = ["○","○","○"];
+const COMPAT = ["NVMe","M2","Thunderbolt","GPU","OCuLink","PCIe"];
+
 window.ID_UNIT = {
-    mode: "sqrt",        // KI‑Modus
-    level: 3,            // Funktionsstufe
-    vector: true,        // ID liefert Funktionsfluss
-    info() {
-        return "ID‑Einheit aktiv · SQRT‑Modus";
-    }
+    seed: SEED,
+    triad: TRIAD,
+    compat: COMPAT
 };
