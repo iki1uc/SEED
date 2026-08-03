@@ -16,8 +16,22 @@ pre { background:#111; padding:20px; border-left:3px solid #6cf; }
 
 <pre id="out">Lade ID_UNIT…</pre>
 
+
 <script>
-// =========================
+const SEED = "⟁";
+const TRIAD = ["○","○","○"];
+const COMPAT = ["NVMe","M2","Thunderbolt","GPU","OCuLink","PCIe"];
+const NET = { id: SEED };
+const WHIRL = { seed: SEED, dim: 81 };
+const RESPO = { origin: SEED };
+
+loadCSV().then(csv => {
+    document.getElementById("out").textContent =
+        JSON.stringify({ ID_UNIT, NET, WHIRL, RESPO, CSV: csv }, null, 2);
+});
+
+    
+    // =========================
 //  ID_UNIT · GEN · 6 Zeilen
 // =========================
 
