@@ -2,57 +2,95 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>ID_UNIT · GEN · SEED ⟁</title>
+<title>WHIRL · 81‑Vektor · SEED ⟁</title>
+
 <style>
 body { background:#000; color:#0f0; font-family:Consolas; padding:40px; }
 h1 { color:#6cf; }
 pre { background:#111; padding:20px; border-left:3px solid #6cf; }
+
+#whirl {
+    width: 360px;
+    height: 360px;
+    margin: 40px auto;
+    border: 3px solid #6cf;
+    border-radius: 50%;
+    position: relative;
+    animation: spin 9s linear infinite;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background:#0f0;
+    border-radius:50%;
+    position:absolute;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
 </style>
 </head>
 
 <body>
 
-<h1>ID_UNIT · GEN · SEED ⟁</h1>
+<h1>WHIRL · 81‑Vektor · SEED ⟁</h1>
 
+<div id="whirl"></div>
 <pre id="out">Lade ID_UNIT…</pre>
 
-
 <script>
+// =========================
+//  ID_UNIT · GEN · SEED
+// =========================
+
 const SEED = "⟁";
 const TRIAD = ["○","○","○"];
 const COMPAT = ["NVMe","M2","Thunderbolt","GPU","OCuLink","PCIe"];
-const NET = { id: SEED };
+
+window.ID_UNIT = { seed: SEED, triad: TRIAD, compat: COMPAT };
+const NET   = { id: SEED };
 const WHIRL = { seed: SEED, dim: 81 };
 const RESPO = { origin: SEED };
+
+// =========================
+//  WHIRL · 81 Punkte
+// =========================
+
+const whirl = document.getElementById("whirl");
+const count = WHIRL.dim;
+const radius = 160;
+
+for(let i=0; i<count; i++){
+    const dot = document.createElement("div");
+    dot.className = "dot";
+
+    const angle = (i / count) * Math.PI * 2;
+    const x = Math.cos(angle) * radius + 180 - 6;
+    const y = Math.sin(angle) * radius + 180 - 6;
+
+    dot.style.left = x + "px";
+    dot.style.top  = y + "px";
+
+    whirl.appendChild(dot);
+}
+
+// =========================
+//  CSV laden + Ausgabe
+// =========================
+
+async function loadCSV() {
+    const r = await fetch("schnittstelle-bandbreite-6.csv");
+    const t = await r.text();
+    return t.split("\n").map(l => l.split(","));
+}
 
 loadCSV().then(csv => {
     document.getElementById("out").textContent =
         JSON.stringify({ ID_UNIT, NET, WHIRL, RESPO, CSV: csv }, null, 2);
 });
-
-    
-    // =========================
-//  ID_UNIT · GEN · 6 Zeilen
-// =========================
-
-const SEED = "⟁";
-const TRIAD = ["○","○","○"];
-const ID_UNIT = { seed: SEED, triad: TRIAD };
-const NET = { id: SEED };
-const WHIRL = { seed: SEED, dim: 81 };
-const RESPO = { origin: SEED };
-
-// =========================
-//  Ausgabe
-// =========================
-loadCSV().then(data => {
-    document.getElementById("out").textContent =
-        JSON.stringify({ ID_UNIT, NET, WHIRL, RESPO, CSV:data }, null, 2);
-});
-
-    
-document.getElementById("out").textContent =
-    JSON.stringify({ ID_UNIT, NET, WHIRL, RESPO }, null, 2);
 </script>
 
 </body>
