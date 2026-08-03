@@ -31,7 +31,12 @@ const RESPO = { origin: SEED };
 // =========================
 //  Ausgabe
 // =========================
+loadCSV().then(data => {
+    document.getElementById("out").textContent =
+        JSON.stringify({ ID_UNIT, NET, WHIRL, RESPO, CSV:data }, null, 2);
+});
 
+    
 document.getElementById("out").textContent =
     JSON.stringify({ ID_UNIT, NET, WHIRL, RESPO }, null, 2);
 </script>
